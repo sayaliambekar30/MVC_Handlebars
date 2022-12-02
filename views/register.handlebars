@@ -1,0 +1,169 @@
+<html>
+
+
+<head>
+    <title>MVC</title>
+    
+</head>
+
+<body>
+    {{> nav}}
+   <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+<link rel="stylesheet" href="static/style1.css">
+<div class="container">
+	<div class="row">
+	<div class="modal-content">
+
+    					{{!-- <div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
+							<h4 class="modal-title">Ready to Join? Create a New Account</h4>
+						</div> --}}
+
+						<form action="/postdata" method="post" id="formname">
+						{{#if errmsg}}
+
+								<div class="alert alert-danger">{{errmsg}}</div>
+
+						{{/if}}
+						{{#if succmsg}}
+
+								<div class="alert alert-success">{{succmsg}}</div>
+
+						{{/if}}
+
+							<div class="modal-body">
+								<div class="form-group">
+									<label for="userName">Full Name</label>
+									<input type="text" id="name" class="form-control" required="" name="name" value="">
+									<label style="color:red ;" id="_name"></label>
+									<span class="help-block">Enter your full name.</span>
+								</div>
+								<div class="form-group">
+									<label for="userEmail">Email Address</label>
+									<input type="text" id="email" class="form-control" required="" name="email" value="">
+									<label style="color:red ;" id="_email"></label>
+									<span class="help-block">Your email address is also used to log in.</span>
+								</div>
+								<div class="form-group">
+									<label for="userMob">Mobile Number</label>
+									<input type="mobile" id="mo_num" class="form-control" required="" name="mobno" value="">
+									<label style="color:red ;" id="_mo_num"></label>
+									<span class="help-block">Enter your mobilr number.</span>
+								</div>
+								<div class="form-group">
+									<label for="userGender">Gender</label>
+		                        <div class="form-check">
+									
+                              <input class="form-check-input" id="gen" type="radio" name="gender" value="female"required="" id="flexRadioDefault1">
+                              <label class="form-check-label"  for="flexRadioDefault1">Female </label>         
+                                 </div>
+                             <div class="form-check">
+                             <input class="form-check-input" id="gen" type="radio" name="gender" value="male" required="" id="flexRadioDefault2" checked>
+                                <label class="form-check-label" for="flexRadioDefault2"> Male</label>
+                                <span class="help-block">Select your gender.</span>
+                                </div>							
+								</div>
+
+								<div class="row">
+									<div class="col-md-6">
+										<div class="form-group">
+											<label for="password">Password</label>
+											<input type="pass" id="pass1" class="form-control psw" required="" name="pass" value="">
+											<label style="color:red ;" id="_pass1"></label>
+											<span class="help-block">Choose a password for your new account.</span>
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="form-group">
+											<label for="passwordr">Repeat Password</label>
+											<input type="password" id="pass2" class="form-control psw2" required="" name="passwordr" value="">
+											<label style="color:red ;" id="_pass1"></label>
+											<span class="help-block">Type the password again. Passwords must match.</span>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="modal-footer">
+								<input type="hidden" name="isEmpty" value="">
+								<button type="submit" name="submit" value="newAccount" class="btn btn-success btn-icon" id="btn"><i class="fa fa-check"></i> Create My Account</button>
+								<button type="button" class="btn btn-default btn-icon" data-dismiss="modal" value="submit"><i class="fa fa-times-circle"></i> Cancel</button>
+							</div>
+						</form>
+
+					</div>
+	</div>
+</div>
+
+
+<script>
+
+var btn = document.getElementById("btn");
+
+ btn.addEventListener("click", function (e){
+	
+var regName = /^[a-zA-Z ]+$/;
+var regEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+var regMo_num = /^[6-9][0-9]{9}$/;
+// const regPass = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})$/;
+
+
+var name = document.getElementById("name").value;
+var email = document.getElementById("email").value;
+var mo_num = document.getElementById("mo_num").value;
+var pass = document.getElementById("pass1").value;
+var passRep = document.getElementById("pass2").value;
+
+var form = document.getElementById("formname");
+
+//alert(form);
+if (regName.test(name)){
+	document.getElementById("_name").innerHTML=" ";
+	if (regEmail.test(email)){
+		document.getElementById("_email").innerHTML=" ";
+	    if (regMo_num.test(mo_num)){
+			document.getElementById("_mo_num").innerHTML=" ";
+	        if(pass==passRep){
+				alert('All entries are correct!.. You can procced further');
+	               form.submit();
+                }
+                else{
+					
+	              //alert("The password in Both password fields must be same")
+				   document.getElementById("_pass1").innerHTML="*The password in Both password fields must be same";
+				   //document.getElementById("_pass").innerHTML="*The password in Both password fields must be same";
+				   e.preventDefault();
+                }
+		}		
+        else{
+	          // alert("Incorrect Mobile number")
+			  document.getElementById("_mo_num").innerHTML="*Incorrect Mobile number";
+			  e.preventDefault();
+            }
+    }
+   else{
+	//alert("Incorrect email")
+	document.getElementById("_email").innerHTML="*Incorrect email";
+	e.preventDefault();
+        }
+}
+else{
+	//alert("Incorrect Name")
+	document.getElementById("_name").innerHTML="*Incorrect Name";
+	e.preventDefault();
+}
+
+
+ })
+
+	
+            
+ </script>
+
+
+
+</body>
+</html>
